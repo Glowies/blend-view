@@ -31,27 +31,31 @@ from sys import argv
 import os
 import platform
 
-sdir = os.path.abspath(os.path.dirname(argv[0]))
+def run():
+    sdir = os.path.abspath(os.path.dirname(argv[0]))
 
-# for most users this should work, adjust if needed
-if platform.system() == 'Darwin':
-    blendapp = '/Applications/Blender/blender.app/Contents/MacOS/blender'
-elif platform.system() == 'Windows':
-    blendapp = 'C:/Program Files/Blender Foundation/Blender/blender.exe'
-else:
-    # if blender can be found from your $PATH this will work
-    # if not you need to adjust this to suit.
-    blendapp = 'blender'
+    # for most users this should work, adjust if needed
+    if platform.system() == 'Darwin':
+        blendapp = '/Applications/Blender/blender.app/Contents/MacOS/blender'
+    elif platform.system() == 'Windows':
+        blendapp = 'C:/Program Files/Blender Foundation/Blender 4.5/blender.exe'
+    else:
+        # if blender can be found from your $PATH this will work
+        # if not you need to adjust this to suit.
+        blendapp = 'blender'
 
-calllist = [
-        blendapp,
-        '--factory-startup',
-        os.path.join(sdir, 'blend_image_view.blend'),
-        '--python',
-        os.path.join(sdir, 'blend_open_image_file.py'),
-        '--']
+    calllist = [
+            blendapp,
+            '--factory-startup',
+            os.path.join(sdir, 'data/blend_image_view.blend'),
+            '--python',
+            os.path.join(sdir, 'data/blend_open_image_file.py'),
+            '--']
 
-# add the args we get as filenames
-calllist.extend(argv)
+    # add the args we get as filenames
+    calllist.extend(argv)
 
-call(calllist)
+    call(calllist)
+
+if __name__ == "__main__":
+    run()
