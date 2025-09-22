@@ -30,9 +30,11 @@ from subprocess import call
 from sys import argv
 import os
 import platform
+import importlib.resources as pkg_resources
+from . import data
 
 def run():
-    sdir = os.path.abspath(os.path.dirname(argv[0]))
+    data_path =pkg_resources.files(data)
 
     # for most users this should work, adjust if needed
     if platform.system() == 'Darwin':
@@ -47,9 +49,9 @@ def run():
     calllist = [
             blendapp,
             '--factory-startup',
-            os.path.join(sdir, 'data/blend_image_view.blend'),
+            data_path.joinpath('blend_image_view.blend'),
             '--python',
-            os.path.join(sdir, 'data/blend_open_image_file.py'),
+            data_path.joinpath('blend_open_image_file.py'),
             '--']
 
     # add the args we get as filenames
