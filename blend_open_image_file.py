@@ -87,3 +87,40 @@ if showAreaType == 'image':
 else:
     bpy.context.window.screen = bpy.data.screens[blenderMovieScreenName]
 
+class IMAGE_PT_color_management_panel(bpy.types.Panel):
+    bl_label = "Color Management"
+    bl_idname = "IMAGE_PT_color_management_panel"
+    bl_space_type = 'IMAGE_EDITOR'
+    bl_region_type = 'UI'
+    bl_category = "Image"
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        
+        col = layout.column()
+        
+        # Split the layout to get two columns for alignment
+        split = col.split(factor=0.3, align=True)
+        col1 = split.column()
+        col2 = split.column()
+
+        # Display the color management properties
+        col1.label(text="Display")
+        col2.prop(scene.display_settings, "display_device", text="")
+        col1.label(text="View")
+        col2.prop(scene.view_settings, "view_transform", text="")
+        col1.label(text="Look")
+        col2.prop(scene.view_settings, "look", text="")
+
+        col.prop(scene.view_settings, "exposure", text="Exposure")
+        col.prop(scene.view_settings, "gamma", text="Gamma")
+
+def register():
+    bpy.utils.register_class(IMAGE_PT_color_management_panel)
+    
+def unregister():
+    bpy.utils.unregister_class(IMAGE_PT_color_management_panel)
+
+if __name__ == "__main__":
+    register()
